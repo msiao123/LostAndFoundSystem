@@ -2,6 +2,17 @@
 {% block content %}
   <h2>Lost and Found Items</h2>
 
+  <form method="GET" style="margin-bottom: 20px;">
+    <input type="text" name="q" placeholder="Search by title" value="{{ query }}">
+    <select name="status">
+      <option value="all" {% if status_filter == "all" or not status_filter %}selected{% endif %}>All</option>
+      <option value="lost" {% if status_filter == "lost" %}selected{% endif %}>Lost</option>
+      <option value="found" {% if status_filter == "found" %}selected{% endif %}>Found</option>
+      <option value="returned" {% if status_filter == "returned" %}selected{% endif %}>Returned</option>
+    </select>
+    <button type="submit">Search</button>
+  </form>
+
   {% if items %}
     <ul>
       {% for item in items %}
@@ -14,7 +25,7 @@
       {% endfor %}
     </ul>
   {% else %}
-    <p>No items reported yet.</p>
+    <p>No items found.</p>
   {% endif %}
 
   <a href="{% url 'report_lost_item' %}">Report New Item</a>
