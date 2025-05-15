@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>{{ item.title }}</h2>
+  <p><strong>Status:</strong> {{ item.status|title }}</p>
+  <p><strong>Date Lost:</strong> {{ item.date_lost }}</p>
+  <p><strong>Location:</strong> {{ item.location }}</p>
+  <p><strong>Description:</strong><br>{{ item.description }}</p>
+  <p><small>Reported by {{ item.user.username }} on {{ item.created_at|date:"F j, Y" }}</small></p>
+
+  <a href="{% url 'item_list' %}">&larr; Back to all items</a>
+{% endblock %}

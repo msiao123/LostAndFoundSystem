@@ -35,3 +35,9 @@ def item_list(request):
         'query': query,
         'status_filter': status_filter,
     })
+
+from django.shortcuts import get_object_or_404
+
+def item_detail(request, item_id):
+    item = get_object_or_404(LostItem, id=item_id)
+    return render(request, 'items/item_detail.html', {'item': item})

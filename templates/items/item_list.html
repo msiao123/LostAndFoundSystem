@@ -17,7 +17,9 @@
     <ul>
       {% for item in items %}
         <li>
-          <strong>{{ item.title }}</strong> - {{ item.status|title }} <br>
+          <a href="{% url 'item_detail' item.id %}">
+            <strong>{{ item.title }}</strong>
+          </a> - {{ item.status|title }} <br>
           <small>{{ item.location }} — Reported on {{ item.created_at|date:"F j, Y" }}</small><br>
           <p>{{ item.description|truncatechars:100 }}</p>
         </li>
