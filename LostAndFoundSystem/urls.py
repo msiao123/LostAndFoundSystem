@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('users.urls')),
     path('', views.home, name='home'),  # 👈 homepage route
+    path('users/', include('users.urls')),
     path('items/', include('items.urls')),
 ]
 

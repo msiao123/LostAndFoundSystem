@@ -16,25 +16,31 @@ def report_lost_item(request):
         form = LostItemForm()
     return render(request, 'items/report_lost_item.html', {'form': form})
 
+from django.db.models import Q  # for complex lookups
+
 def item_list(request):
-    query = request.GET.get('q')
     status_filter = request.GET.get('status')
+    query = request.GET.get('q')
 
     items = LostItem.objects.all()
 
-    if query:
-        items = items.filter(title__icontains=query)
-
-    if status_filter and status_filter != 'all':
+    if status_filter in ['lost', 'found', 'returned']:
         items = items.filter(status=status_filter)
+
+    if query:
+        items = items.filter(
+            Q(title__icontains=query) |
+            Q(location__icontains=query)
+        )
 
     items = items.order_by('-created_at')
 
     return render(request, 'items/item_list.html', {
         'items': items,
-        'query': query,
         'status_filter': status_filter,
+        'query': query,
     })
+
 
 from django.shortcuts import get_object_or_404
 
@@ -89,3 +95,4 @@ def mark_as_returned(request, item_id):
     item.status = 'returned'
     item.save()
     return redirect('item_detail', item_id=item.id)
+

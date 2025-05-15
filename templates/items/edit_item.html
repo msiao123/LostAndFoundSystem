@@ -1,10 +1,82 @@
 {% extends "base.html" %}
+
 {% block content %}
-  <h2>Edit Item: {{ item.title }}</h2>
-  <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save Changes</button>
-  </form>
-  <a href="{% url 'item_detail' item.id %}">Cancel</a>
+  <div class="form-card">
+    <h2>Edit Item: {{ item.title }}</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn-edit">Save Changes</button>
+      <a href="{% url 'item_detail' item.id %}" class="btn-cancel">Cancel</a>
+    </form>
+  </div>
+
+  <style>
+    .form-card {
+      background-color: white;
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+      max-width: 500px;
+      margin: 2rem auto;
+    }
+
+    .form-card h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #0069d9;
+    }
+
+    .form-card form p {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-card input[type="text"],
+    .form-card textarea,
+    .form-card select,
+    .form-card input[type="file"],
+    .form-card input[type="date"] {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .btn-edit {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #17a2b8;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .btn-edit:hover {
+      background-color: #138496;
+    }
+
+    .btn-cancel {
+      display: inline-block;
+      margin-top: 1rem;
+      text-align: center;
+      width: 100%;
+      padding: 0.6rem;
+      background-color: #f8f9fa;
+      border: 1px solid #ccc;
+      color: #333;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+
+    .btn-cancel:hover {
+      background-color: #e2e6ea;
+    }
+  </style>
 {% endblock %}

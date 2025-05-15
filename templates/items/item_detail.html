@@ -1,30 +1,114 @@
 {% extends "base.html" %}
+
 {% block content %}
-  <h2>{{ item.title }}</h2>
-  <p><strong>Status:</strong> {{ item.status|title }}</p>
-  <p><strong>Date Lost:</strong> {{ item.date_lost }}</p>
-  <p><strong>Location:</strong> {{ item.location }}</p>
-  <p><strong>Description:</strong><br>{{ item.description }}</p>
+  <div class="item-detail-card">
+    <h2>{{ item.title }}</h2>
 
-  {% if item.image %}
-    <img src="{{ item.image.url }}" alt="Image of {{ item.title }}" style="max-width: 400px; margin-top: 10px;">
-  {% endif %}
-
-  <p><small>Reported by {{ item.user.username }} on {{ item.created_at|date:"F j, Y" }}</small></p>
-
-  {% if user == item.user %}
-    <p>
-      <a href="{% url 'edit_item' item.id %}">Edit</a> |
-      <a href="{% url 'delete_item' item.id %}">Delete</a>
+    <p class="status">
+      <strong>Status:</strong>
+      <span class="badge {{ item.status }}">{{ item.status|title }}</span>
     </p>
 
-    {% if item.status != 'returned' %}
-      <form action="{% url 'mark_as_returned' item.id %}" method="POST" style="margin-top: 10px;">
-        {% csrf_token %}
-        <button type="submit">Mark as Returned</button>
-      </form>
-    {% endif %}
-  {% endif %}
+    <p><strong>Date Lost:</strong> {{ item.date_lost }}</p>
+    <p><strong>Location:</strong> {{ item.location }}</p>
+    <p><strong>Description:</strong><br>{{ item.description }}</p>
 
-  <a href="{% url 'item_list' %}">&larr; Back to all items</a>
+    {% if item.image %}
+      <img src="{{ item.image.url }}" alt="Image of {{ item.title }}">
+    {% endif %}
+
+    <p class="meta">
+      <small>Reported by {{ item.user.username }} on {{ item.created_at|date:"F j, Y" }}</small>
+    </p>
+
+    {% if user == item.user %}
+      <div class="action-links">
+        <a href="{% url 'edit_item' item.id %}" class="btn blue">Edit</a>
+        <a href="{% url 'delete_item' item.id %}" class="btn red">Delete</a>
+
+        {% if item.status != 'returned' %}
+          <form action="{% url 'mark_as_returned' item.id %}" method="POST" class="return-form">
+            {% csrf_token %}
+            <button type="submit" class="btn green">Mark as Returned</button>
+          </form>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <a href="{% url 'item_list' %}" class="back-link">&larr; Back to all items</a>
+  </div>
+
+  <style>
+    .item-detail-card {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .item-detail-card img {
+      margin-top: 1rem;
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    .item-detail-card .meta {
+      margin-top: 1rem;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .badge.lost { background-color: #dc3545; color: white; }
+    .badge.found { background-color: #ffc107; color: black; }
+    .badge.returned { background-color: #28a745; color: white; }
+
+    .action-links {
+      margin-top: 1.5rem;
+    }
+
+    .action-links .btn {
+      padding: 0.5rem 1rem;
+      margin-right: 10px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn.blue { background-color: #007bff; }
+    .btn.red { background-color: #dc3545; }
+    .btn.green { background-color: #28a745; }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .return-form {
+      display: inline;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      text-decoration: none;
+      color: #0069d9;
+      font-weight: 500;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
 {% endblock %}

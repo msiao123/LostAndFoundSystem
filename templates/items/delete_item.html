@@ -1,10 +1,68 @@
 {% extends "base.html" %}
+
 {% block content %}
-  <h2>Delete "{{ item.title }}"?</h2>
-  <p>This action cannot be undone.</p>
-  <form method="POST">
-    {% csrf_token %}
-    <button type="submit">Yes, delete it</button>
-    <a href="{% url 'item_detail' item.id %}">Cancel</a>
-  </form>
+  <div class="delete-card">
+    <h2>Delete "{{ item.title }}"?</h2>
+    <p class="warning-text">This action cannot be undone.</p>
+
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn-delete">Yes, delete it</button>
+      <a href="{% url 'item_detail' item.id %}" class="btn-cancel">Cancel</a>
+    </form>
+  </div>
+
+  <style>
+    .delete-card {
+      background-color: #fff;
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      max-width: 500px;
+      margin: 3rem auto;
+      text-align: center;
+    }
+
+    .delete-card h2 {
+      color: #dc3545;
+      margin-bottom: 1rem;
+    }
+
+    .warning-text {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    .btn-delete {
+      background-color: #dc3545;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-right: 10px;
+    }
+
+    .btn-delete:hover {
+      background-color: #c82333;
+    }
+
+    .btn-cancel {
+      background-color: #f8f9fa;
+      color: #333;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: normal;
+      transition: background-color 0.2s;
+    }
+
+    .btn-cancel:hover {
+      background-color: #e2e6ea;
+    }
+  </style>
 {% endblock %}

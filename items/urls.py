@@ -9,3 +9,4 @@ urlpatterns = [
     path('<int:item_id>/delete/', views.delete_item, name='delete_item'),
     path('<int:item_id>/mark-returned/', views.mark_as_returned, name='mark_as_returned'),
 ]
+

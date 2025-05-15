@@ -1,24 +1,103 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Welcome to the Lost and Found System</h1>
-  <p>Your one-stop platform to report and find lost items.</p>
-  <a href="{% url 'item_list' %}">View Lost and Found Items</a>
+  <div class="home-card">
+    <h1>Welcome to the Lost and Found System</h1>
+    <p class="intro">Your one-stop platform to report and find lost or found items around campus or the community.</p>
 
-  {% if user.is_authenticated %}
-    <p>Hello, {{ user.username }}! You are logged in.</p>
-    <p><a href="/accounts/logout/">Logout</a></p>
-  {% else %}
-    <p>You are not logged in.</p>
-    <p><a href="/accounts/login/">Login</a> | <a href="/accounts/register/">Register</a></p>
-  {% endif %}
+    <a href="{% url 'item_list' %}" class="primary-btn">🔍 View Lost and Found Items</a>
 
-  <hr>
+    <div class="auth-box">
+      {% if user.is_authenticated %}
+        <p>Hello, <strong>{{ user.username }}</strong>! You are logged in.</p>
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+          {% csrf_token %}
+          <button type="submit" class="secondary-btn">Logout</button>
+        </form>
+      {% else %}
+        <p>You are not logged in.</p>
+        <a href="{% url 'login' %}" class="secondary-btn">Login</a>
+        <a href="{% url 'register' %}" class="secondary-btn">Register</a>
+      {% endif %}
+    </div>
+  </div>
 
-  <h3>Navigation</h3>
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="#">View Lost Items</a></li>
-    <li><a href="#">Report Lost/Found Item</a></li>
-  </ul>
+  <style>
+    .home-card {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .home-card h1 {
+      margin-bottom: 1rem;
+      color: #0069d9;
+    }
+
+    .home-card .intro {
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    .primary-btn {
+      display: inline-block;
+      background-color: #0069d9;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.2s ease-in-out;
+      margin-bottom: 2rem;
+    }
+
+    .primary-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .auth-box {
+      margin-top: 1.5rem;
+    }
+
+    .auth-box p {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    .secondary-btn {
+      display: inline-block;
+      margin: 0.3rem 0.5rem;
+      padding: 0.5rem 1rem;
+      background-color: #f8f9fa;
+      color: #333;
+      border-radius: 6px;
+      text-decoration: none;
+      border: 1px solid #ccc;
+      font-weight: 500;
+      transition: background-color 0.2s;
+    }
+
+    .secondary-btn:hover {
+      background-color: #e2e6ea;
+    }
+
+    form button.secondary-btn {
+      background-color: #f8f9fa;
+      color: #333;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    form button.secondary-btn:hover {
+      background-color: #e2e6ea;
+    }
+  </style>
 {% endblock %}

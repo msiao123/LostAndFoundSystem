@@ -1,9 +1,79 @@
 {% extends "base.html" %}
+
 {% block content %}
-  <h2>Register</h2>
-  <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-  </form>
+  <div class="form-card">
+    <h2>Create an Account</h2>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn-register">Register</button>
+    </form>
+
+    <p class="login-link">
+      Already have an account?
+      <a href="{% url 'login' %}">Login here</a>.
+    </p>
+  </div>
+
+  <style>
+    .form-card {
+      background-color: white;
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+      max-width: 450px;
+      margin: 2rem auto;
+    }
+
+    .form-card h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #0069d9;
+    }
+
+    .form-card form p {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-card input[type="text"],
+    .form-card input[type="email"],
+    .form-card input[type="password"] {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .btn-register {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #28a745;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-register:hover {
+      background-color: #218838;
+    }
+
+    .login-link {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    .login-link a {
+      color: #0069d9;
+      text-decoration: none;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
 {% endblock %}
