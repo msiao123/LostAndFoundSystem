@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lost and Found System</title>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a> |
+        <a href="/accounts/login/">Login</a> |
+        <a href="/accounts/register/">Register</a> |
+        <a href="/accounts/logout/">Logout</a>
+    </nav>
+
+    <hr>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</body>
+</html>
