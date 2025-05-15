@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Lost and Found Items</h2>
+
+  {% if items %}
+    <ul>
+      {% for item in items %}
+        <li>
+          <strong>{{ item.title }}</strong> - {{ item.status|title }} <br>
+          <small>{{ item.location }} — Reported on {{ item.created_at|date:"F j, Y" }}</small><br>
+          <p>{{ item.description|truncatechars:100 }}</p>
+        </li>
+        <hr>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No items reported yet.</p>
+  {% endif %}
+
+  <a href="{% url 'report_lost_item' %}">Report New Item</a>
+{% endblock %}
