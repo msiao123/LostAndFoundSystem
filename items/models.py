@@ -14,6 +14,7 @@ class LostItem(models.Model):
     location = models.CharField(max_length=255)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='lost')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='item_images/', null=True, blank=True)  # <-- Inserted here
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -6,7 +6,7 @@ from .models import LostItem
 @login_required
 def report_lost_item(request):
     if request.method == 'POST':
-        form = LostItemForm(request.POST)
+        form = LostItemForm(request.POST, request.FILES)
         if form.is_valid():
             lost_item = form.save(commit=False)
             lost_item.user = request.user
@@ -54,7 +54,7 @@ def edit_item(request, item_id):
         return HttpResponseForbidden("You are not allowed to edit this item.")
 
     if request.method == 'POST':
-        form = LostItemForm(request.POST, instance=item)
+        form = LostItemForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
             form.save()
             return redirect('item_detail', item_id=item.id)
@@ -75,3 +75,17 @@ def delete_item(request, item_id):
         return redirect('item_list')
 
     return render(request, 'items/delete_item.html', {'item': item})
+
+from django.views.decorators.http import require_POST
+
+@login_required
+@require_POST
+def mark_as_returned(request, item_id):
+    item = get_object_or_404(LostItem, id=item_id)
+
+    if request.user != item.user:
+        return HttpResponseForbidden("You are not allowed to update this item.")
+
+    item.status = 'returned'
+    item.save()
+    return redirect('item_detail', item_id=item.id)

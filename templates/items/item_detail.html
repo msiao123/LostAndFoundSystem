@@ -5,6 +5,11 @@
   <p><strong>Date Lost:</strong> {{ item.date_lost }}</p>
   <p><strong>Location:</strong> {{ item.location }}</p>
   <p><strong>Description:</strong><br>{{ item.description }}</p>
+
+  {% if item.image %}
+    <img src="{{ item.image.url }}" alt="Image of {{ item.title }}" style="max-width: 400px; margin-top: 10px;">
+  {% endif %}
+
   <p><small>Reported by {{ item.user.username }} on {{ item.created_at|date:"F j, Y" }}</small></p>
 
   {% if user == item.user %}
@@ -12,6 +17,13 @@
       <a href="{% url 'edit_item' item.id %}">Edit</a> |
       <a href="{% url 'delete_item' item.id %}">Delete</a>
     </p>
+
+    {% if item.status != 'returned' %}
+      <form action="{% url 'mark_as_returned' item.id %}" method="POST" style="margin-top: 10px;">
+        {% csrf_token %}
+        <button type="submit">Mark as Returned</button>
+      </form>
+    {% endif %}
   {% endif %}
 
   <a href="{% url 'item_list' %}">&larr; Back to all items</a>
