@@ -7,5 +7,12 @@
   <p><strong>Description:</strong><br>{{ item.description }}</p>
   <p><small>Reported by {{ item.user.username }} on {{ item.created_at|date:"F j, Y" }}</small></p>
 
+  {% if user == item.user %}
+    <p>
+      <a href="{% url 'edit_item' item.id %}">Edit</a> |
+      <a href="{% url 'delete_item' item.id %}">Delete</a>
+    </p>
+  {% endif %}
+
   <a href="{% url 'item_list' %}">&larr; Back to all items</a>
 {% endblock %}
