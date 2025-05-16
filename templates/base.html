@@ -7,7 +7,7 @@
 
     <style>
         :root {
-            --primary-color: #0069d9;
+            --primary-color: #336699;
             --secondary-color: #f8f9fa;
             --text-color: #212529;
             --white: #ffffff;
@@ -97,10 +97,6 @@
         <div>
             {% if user.is_authenticated %}
                 <span>Welcome, {{ user.username }}!</span>
-                <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit">Logout</button>
-                </form>
             {% endif %}
         </div>
     </nav>
